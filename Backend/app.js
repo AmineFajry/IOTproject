@@ -3,12 +3,24 @@ const app = express()
 const cors = require('cors')
 const config  = require('./config')
 const apiRoute = require('./routes/apiRoute')
-//const dotEnv = require('dotenv').config()
+const sequelize = require("./db.js")
+const MicroController = require('./models/MicroControllerModel')
+const Badge = require('./models/BadgeModel')
 
 
 app.use(express.json());
 app.use(cors(config.corsOptions))
 app.use('/api', apiRoute);
+
+try {
+    sequelize.authenticate();
+
+
+
+    sequelize.sync()
+} catch (error) {
+    console.error('Unable to connect to the database:', error);
+}
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT} ...`));

@@ -1,9 +1,6 @@
 const User = require('../models/userModel')
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
-const seatableApi = require('../models/seatableAPi')
-const api = new seatableApi().getInstance()
-
 
 async function login(req, res)
 {
@@ -16,11 +13,9 @@ async function login(req, res)
     })
     if(!userFind){
         const result = await createUser({email, password})
-        await api.getStructure()
         res.status(200).json(result);
     }else {
         const result = await updateToken({userFind, password})
-        await api.getStructure()
         res.status(200).json(result);
     }
 }
@@ -67,15 +62,6 @@ async function logout(req,res){
     res.status(200).json({error:false});
 }
 
-async function getStructure(){
-    try{
-        return await api.getStructure()
-    }
-    catch (e) {
-        console.log(e)
-    }
-
-}
 
 module.exports = {login,logout};
 
