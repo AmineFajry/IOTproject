@@ -10,6 +10,6 @@ const {checkAuth} = require("../middlewares/auth");
 router.post('/login',cors(config.corsOptions),userController.login);
 router.post('/logout',cors(config.corsOptions),checkAuth,userController.logout);
 
-router.get('/user/listobject',checkAuth,cors(config.corsOptions),microcController.getData);
+router.get('/user/listobject',checkAuth,cors(config.corsOptions),microcController.data);
 
 module.exports = router;

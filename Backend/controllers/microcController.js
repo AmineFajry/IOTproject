@@ -1,6 +1,6 @@
 const MicroController = require('../models/MicroControllerModel')
 
-async function getData(req,res)
+async function data(req,res)
 {
     try{
         const data = await MicroController.findAll().then((data) => {
@@ -13,4 +13,4 @@ async function getData(req,res)
     }
 }
 
-module.exports = {getData};
+module.exports = {data};
