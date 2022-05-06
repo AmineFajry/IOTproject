@@ -1,8 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
-const MicroController = require('./models/MicroControllerModel')
-const Badge = require('./models/BadgeModel')
-const User = require('./models/userModel')
+const User = require('../models/userModel')
 
 async function login(req, res)
 {
@@ -64,22 +62,6 @@ async function logout(req,res){
     res.status(200).json({error:false});
 }
 
-async function getListBadge(req,res){
-    const badges = await Badge.find({
-        include:[
-            {
-                model:User
-            },
-        ]
-    })
-    res.status(200).json({error:false});
-}
 
-async function getListAccess(req,res){
-
-    res.status(200).json({error:false});
-}
-
-
-module.exports = {login,logout,getListBadge,getListAccess};
+module.exports = {login,logout};
 
