@@ -15,6 +15,17 @@ app.use('/api', apiRoute);
 try {
     sequelize.authenticate();
 
+    MicroController.belongsToMany(Badge, {
+        through: "historique",
+        as: "badges",
+        foreignKey: "microc_id",
+    });
+
+    Badge.belongsToMany(MicroController, {
+        through: "historique",
+        as: "microcs",
+        foreignKey: "badge_id",
+    });
 
 
     sequelize.sync()
