@@ -1,6 +1,9 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
 const User = require('../models/userModel')
+const MicroController = require('../models/MicroControllerModel')
+const Badge = require('../models/BadgeModel')
+const User = require('../models/UserModel')
 
 async function login(req, res)
 {
@@ -59,6 +62,27 @@ async function logout(req,res){
     })
     userFind.token = null
     const userSave = await userFind.save()
+    res.status(200).json({error:false});
+}
+
+async function getListBadge(req,res){
+    const email = req.query.email
+    const badges = await User.findAll({
+        where:{
+            email:email
+        },
+        include:[
+            {
+                model:MicroController,
+                as:'user_microc'
+            }
+        ]
+    })
+    res.status(200).json({error:false,message:badges});
+}
+
+async function getListAccess(req,res){
+
     res.status(200).json({error:false});
 }
 
