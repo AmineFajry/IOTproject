@@ -5,9 +5,13 @@ const cors = require('cors')
 
 
 const userController = require('../controllers/userController');
+const microcController = require('../controllers/microcController');
 const {checkAuth} = require("../middlewares/auth");
 
 router.post('/login',cors(config.corsOptions),userController.login);
 router.post('/logout',cors(config.corsOptions),checkAuth,userController.logout);
+
+
+router.get('/user/listobject',checkAuth,cors(config.corsOptions),microcController.getData);
 
 module.exports = router;

@@ -6,6 +6,7 @@ const apiRoute = require('./routes/apiRoute')
 const sequelize = require("./db.js")
 const MicroController = require('./models/MicroControllerModel')
 const Badge = require('./models/BadgeModel')
+const User = require('./models/UserModel')
 
 
 app.use(express.json());
@@ -27,7 +28,8 @@ try {
         foreignKey: "badge_id",
     });
 
-
+    User.hasMany(MicroController,{foreignKey: 'user_id', as:'user_microc'});
+    
     sequelize.sync()
 } catch (error) {
     console.error('Unable to connect to the database:', error);
