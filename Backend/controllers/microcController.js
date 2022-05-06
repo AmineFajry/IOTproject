@@ -14,24 +14,23 @@ async function data(req,res)
     }
 }
 
-async function create(req,res)
+async function create(req)
 {
-    try{
-        let seuilLuminosite = req.body.seuilLuminosite
-        let addrMac = req.body.addrMac
-        let user_id = req.body.user_id
-        let microc = new MicroController({
-            seuilLuminosite: seuilLuminosite,
-            addrMac: addrMac,
-            user_id:user_id
-        });
+    let seuil = req.body.seuilLuminosite
+    let addr= req.body.addrMac
+    let user = req.body.user_id
 
-        const microcSave = await microc.save(microc)
+    let microc = new MicroController({
+        seuilLuminosite: seuil,
+        addrMac: addr,
+        user_id:user
+    });
 
+    const microcSave = await microc.save(microc)
+    if(!microcSave){
+        return {error: true};
     }
-    catch(err){
-        console.log(err)
-    }
+    return {addrMac: microc.addrMac,error:false};
 }
 
 
