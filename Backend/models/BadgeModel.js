@@ -10,7 +10,7 @@ const Badge = sequelize.define('Badge', {
         autoIncrement: true
     },
     autorisation: {
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
         allowNull: false
     },
     prenom: {

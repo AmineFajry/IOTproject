@@ -10,7 +10,7 @@ const MicroController = sequelize.define('MicroController', {
         autoIncrement: true
     },
     seuilLuminosite: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     addrMac: {
