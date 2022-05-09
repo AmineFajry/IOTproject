@@ -1,24 +1,42 @@
 <template>
-  <v-data-table
+    <v-data-table
     :headers="headers"
     :items="rows"
-    hide-default-footer
-  ></v-data-table>
+    hide-default-footer 
+    >
+    <template v-slot:[`item.actions`]="{}">
+            <v-icon
+                small
+                class="mr-2"
+                >
+                mdi-pencil
+            </v-icon>
+            <v-icon
+                small
+                >
+                mdi-delete
+            </v-icon>
+        </template>
+    </v-data-table>
+    
 </template>
 
 <script>
 import { mapActions } from "vuex";
 export default {
-    name:"ObjetConnecte",
+    name:"ObjetConnecté",
     components:{},
     data(){
         return{
+          dialog: false,
+          dialogDelete: false,
           headers: [
           { text: 'Idantifient', value: 'id' },
           { text: 'Adresse Mac', value: 'addrMac' },
           { text: 'Seuil de Luminosité', value: 'seuilLuminosite'},
           { text: 'Numéro User', value: 'user_id' },
           { text: 'Crée', value: 'createdAt' },
+          { text: 'Actions', value: 'actions', sortable: false }
         ],
         rows: [
           {
@@ -51,8 +69,9 @@ export default {
         })
     },
     methods:{
-     ...mapActions(['getIOTdata']),
+     ...mapActions(['getIOTdata','deleteIOTdata','postIOTData','updateLightSensor']),
     },
-    computed:{}
+    computed:{
+    }
 }
 </script>
