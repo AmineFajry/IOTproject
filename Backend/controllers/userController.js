@@ -123,7 +123,7 @@ async function updateBadgeAccess(req,res){
     const data = req.body
     const badge = await Badge.findOne({
         where:{
-            badgeAdress : data.badgeAdress
+            badgeAddress : data.badgeAddress
         }
     })
 
