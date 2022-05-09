@@ -6,7 +6,7 @@ const apiRoute = require('./routes/apiRoute')
 const sequelize = require("./db.js")
 const MicroController = require('./models/MicroControllerModel')
 const Badge = require('./models/BadgeModel')
-
+const User = require('./models/UserModel')
 
 app.use(express.json());
 app.use(cors(config.corsOptions))
@@ -26,7 +26,9 @@ try {
         as: "microcs",
         foreignKey: "badge_id",
     });
-
+    
+    User.hasMany(MicroController,{foreignKey: 'user_id', as:'user_microc'});
+    MicroController.hasMany(Badge,{foreignKey: 'microc_id', as:'microc_badge'});
 
     sequelize.sync()
 } catch (error) {

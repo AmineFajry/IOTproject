@@ -9,6 +9,9 @@ const Badge = sequelize.define('Badge', {
         primaryKey: true,
         autoIncrement: true
     },
+    autorisation: {
+        type: DataTypes.BOOLEAN,
+    },
     badgeAdress:{
         type: DataTypes.STRING,
         allowNull: false,

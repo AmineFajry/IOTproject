@@ -1,8 +1,8 @@
+const User = require('../models/userModel')
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
 const MicroController = require('../models/MicroControllerModel')
 const Badge = require('../models/BadgeModel')
-const User = require('../models/UserModel')
 
 async function login(req, res)
 {
@@ -117,7 +117,6 @@ async function getListAccess(req,res){
         console.log(e)
     }
 }
-
 async function updateBadgeAccess(req,res){
     const data = req.body
     const badge = await Badge.findOne({
@@ -135,7 +134,6 @@ async function updateBadgeAccess(req,res){
         res.status(400).json({error:false,message:badgeSaved})
     }
 }
-
 
 module.exports = {login,logout,getListBadge,getListAccess,updateBadgeAccess};
 
