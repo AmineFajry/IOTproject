@@ -45,6 +45,18 @@ export default new Vuex.Store({
     deauthenticate() {
       const email =  localStorage.getItem("email");
       return dataService.logout({email});
+    },
+    getIOTdata(){
+      return dataService.getIOTData();
+    },
+    deleteIOTdata(_,{id}){
+      return dataService.deleteIOTData({id});
+    },
+    postIOTData(_,{seuil,addrMac}){
+      return dataService.postIOTData({seuil,addrMac});
+    },
+    updateLightSensor(_,{seuil,addrMac}){
+      return dataService.updateLightSensor({seuil,addrMac});
     }
   }
 });
