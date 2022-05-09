@@ -35,7 +35,7 @@ async function createUser({email, password})
     if(!userSave){
         return {error: true};
     }
-    return {email: userSave.email, token,error:false};
+    return {id:userSave.id,email: userSave.email, token,error:false};
 }
 
 async function updateToken({userFind, password})
@@ -45,7 +45,7 @@ async function updateToken({userFind, password})
         const token = await jwt.sign({email: userFind.email}, 'secret_key');
         userFind.token = token
         const userSave = await userFind.save()
-        return {email: userFind.email, token,error:false};
+        return {id:userFind.id, email: userFind.email, token,error:false};
     }
     else {
         return {error: true};

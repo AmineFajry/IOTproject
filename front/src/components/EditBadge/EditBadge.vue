@@ -73,6 +73,7 @@ export default {
         prenom:'',
         nom:'',
         autorisation:'',
+        user_id:''
       }
     }
   },

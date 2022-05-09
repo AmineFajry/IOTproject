@@ -37,9 +37,9 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
-import CreateBadge from "@/components/EditBadge/CreateBadge";
-import EditBadge from "@/components/CreateBadge/EditBadge";
+import {mapActions,mapGetters} from "vuex";
+import CreateBadge from "@/components/EditBadge/EditBadge";
+import EditBadge from "@/components/CreateBadge/CreateBadge";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -82,14 +82,13 @@ export default {
     })
   },
   computed:{
+    ...mapGetters(['user'])
   },
   methods:{
     ...mapActions(['getBadges','removeBadge','editBadge','storeBadge']),
     deleteBadge(id){
       this.removeBadge({id}).then(result=>{
-        if(!result.data.error && result.data.message){
-          this.badges = this.badges.filter(_badge => !_badge.id === id)
-        }
+      console.log(result)
       })
     },
     updateBadge(data){
@@ -98,8 +97,10 @@ export default {
         data.dialog.value = false
       })
     },
-    createBadge(data){
-      this.storeBadge({badge:data.badge}).then(result=>{
+    createBadge: function (data) {
+      data.badge.user_id = this.user.id
+      console.log(this.user.id)
+      this.storeBadge({badge: data.badge}).then(result => {
         console.log(result)
         data.dialog.value = false
       })

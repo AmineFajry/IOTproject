@@ -27,21 +27,31 @@ export default new Vuex.Store({
     setAuthenticating(state, authenticating) {
       state.authenticating = authenticating;
     },
-    setUser(state, { email, token}) {
+    setUser(state, { email, token,id}) {
       Vue.set(state.user, "email", email);
       Vue.set(state.user, "token", token);
+      Vue.set(state.user, "id", id);
     },
     setBadges(state, badges) {
-      console.log(badges)
       state.badges = badges
     },
     upsertBadge(state,badge){
-      console.log(badge)
       const index = state.badges.findIndex(_badge => _badge.id === badge.id)
-      console.log(index)
       if(index !== -1){
         console.log('ici')
         Vue.set(state.badges,index,badge)
+      }else{
+        state.badges.push(badge)
+      }
+    },
+    deleteBadge(state, {id}){
+      console.log(id)
+      const index = state.badges.findIndex(_badge => _badge.id === id)
+      console.log(state.badges)
+      console.log(index)
+
+      if(index !== -1){
+        state.badges.splice(index,1)
       }
     }
   },
@@ -54,6 +64,7 @@ export default new Vuex.Store({
       const promise = dataService.login({email, password});
       promise.then(user=>{
         commit("setUser", user.data);
+        console.log(user.data)
         localStorage.setItem("email", user.data.email);
         localStorage.setItem("token", user.data.token);
       });
@@ -71,8 +82,15 @@ export default new Vuex.Store({
       })
       return promise;
     },
-    removeBadge(_,{id}){
-      return dataService.removeBadge({id});
+    removeBadge({commit},{id}){
+      console.log(id)
+      const promise = dataService.removeBadge({id});
+      promise.then(result =>{
+        if(result.data.message === 1){
+          commit('deleteBadge', {id})
+        }
+      })
+      return promise;
     },
     editBadge({commit},{badge}){
       const promise = dataService.editBadge({badge});
