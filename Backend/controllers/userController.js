@@ -118,6 +118,24 @@ async function getListAccess(req,res){
     }
 }
 
+async function updateBadgeAccess(req,res){
+    const data = req.body
+    const badge = await Badge.findOne({
+        where:{
+            badgeAdress : data.badgeAdress
+        }
+    })
 
-module.exports = {login,logout,getListBadge,getListAccess};
+    badge.autorisation = data.autorisation
+    const badgeSaved = await badge.save()
+
+    if(!badgeSaved){
+        res.status(400).json({error:true,message:'DATA_NO_FOUND'})
+    }else{
+        res.status(400).json({error:false,message:badgeSaved})
+    }
+}
+
+
+module.exports = {login,logout,getListBadge,getListAccess,updateBadgeAccess};
 
