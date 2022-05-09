@@ -1,4 +1,3 @@
-const User = require('../models/userModel')
 const MicroController = require('../models/MicroControllerModel')
 const Badge = require('../models/BadgeModel')
 
@@ -37,7 +36,7 @@ async function badgeAccess(req,res){
         }
     })
 
-    if(!microController){
+    if(!badge){
         res.status(400).json({error:true,message:"NO_DATA"})
     }else{
         res.status(200).json({error:false,message:badge.autorisation})

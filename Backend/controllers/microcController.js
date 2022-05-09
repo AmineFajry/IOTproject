@@ -74,7 +74,35 @@ async function deleteMicroc(req,res){
 
 async function updateLightSensor(req,res)
 {
+    const data = req.body
 
+    const microc = await MicroController.findOne({
+        where:{
+            addrMac : data.addrMac
+        }
+    })
+
+    const userFind = await User.findOne({
+        where: {
+            email: data.email
+        }
+    })
+
+    let microSaved = null
+
+    if(microc !== null && userFind !== null)
+    {
+        microc.seuilLuminosite = data.seuilLuminosite
+        microSaved = await microc.save()
+    }else{
+        res.status(400).json({error:true,message:'DATA_NOT_FOUND'})
+    }
+
+    if(!microSaved){
+        res.status(400).json({error:true,message:'DATA_NO_FOUND'})
+    }else{
+        res.status(200).json({error:false,message:microSaved})
+    }
 }
 
 module.exports = {data,create,updateLightSensor,deleteMicroc};
