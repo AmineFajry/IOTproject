@@ -1,6 +1,8 @@
-const User = require('../models/userModel')
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
+const MicroController = require('../models/MicroControllerModel')
+const Badge = require('../models/BadgeModel')
+const User = require('../models/UserModel')
 
 async function login(req, res)
 {
@@ -62,6 +64,60 @@ async function logout(req,res){
     res.status(200).json({error:false});
 }
 
+async function getListBadge(req,res){
+    try {
+        const email = req.query.email
+        const user = await User.findOne({
+            where:{
+                email:email
+            },
+            include:[
+                {
+                    model:MicroController,
+                    as:'user_microc',
+                    include:[
+                        {
+                            model:Badge,
+                            as:"microc_badge"
+                        }
+                    ]
+                },
 
-module.exports = {login,logout};
+            ]
+        })
+        res.status(200).json({error:false,message:user.user_microc});
+    }catch (e) {
+        console.log(e)
+    }
+}
+
+async function getListAccess(req,res){
+    try {
+        const email = req.query.email
+        const user = await User.findOne({
+            where:{
+                email:email
+            },
+            include:[
+                {
+                    model:MicroController,
+                    as:'user_microc',
+                    include:[
+                        {
+                            model:Badge,
+                            as:'badges'
+                        }
+                    ]
+                },
+
+            ]
+        })
+        res.status(200).json({error:false,message:user.user_microc});
+    }catch (e) {
+        console.log(e)
+    }
+}
+
+
+module.exports = {login,logout,getListBadge,getListAccess};
 
