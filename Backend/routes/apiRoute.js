@@ -19,6 +19,7 @@ router.put('/user/bagde/update/access',cors(config.corsOptions),checkAuth,userCo
 
 router.post('/user/badge',cors(config.corsOptions),checkAuth,userController.createBadge);
 router.delete('/user/badge',cors(config.corsOptions),checkAuth,userController.deleteBadge);
+router.put('/user/badge',cors(config.corsOptions),checkAuth,userController.editBadge);
 
 router.get('/iot/brightness',cors(config.corsOptions),iotController.getBrightness)
 router.get('/iot/access',cors(config.corsOptions),iotController.badgeAccess)

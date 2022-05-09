@@ -74,19 +74,13 @@ async function getListBadge(req,res){
             },
             include:[
                 {
-                    model:MicroController,
-                    as:'user_microc',
-                    include:[
-                        {
-                            model:Badge,
-                            as:"microc_badge"
-                        }
-                    ]
+                    model:Badge,
+                    as:"user_badge"
                 },
 
             ]
         })
-        res.status(200).json({error:false,message:user.user_microc});
+        res.status(200).json({error:false,message:user.user_badge});
     }catch (e) {
         console.log(e)
     }
@@ -138,7 +132,7 @@ async function updateBadgeAccess(req,res){
 }
 
 async function createBadge(req,res){
-    const data = req.body
+    const data = req.body.badge
 
     const badge = await Badge.create(data)
 
@@ -149,8 +143,27 @@ async function createBadge(req,res){
     }
 }
 
+async function editBadge(req,res){
+    const data = req.body.badge
+    console.log(data)
+
+    const badge = await Badge.findOne({
+        where:{
+            id:data.id
+        }
+    })
+    badge.set(data);
+    if(!badge){
+        res.status(400).json({error:true,message:'DATA_NO_SAVE'})
+    }else{
+        const badgeSaved = await badge.save()
+        console.log(badgeSaved)
+        res.status(200).json({error:false,message:badgeSaved})
+    }
+}
+
 async function deleteBadge(req,res){
-    const id = req.body.id
+    const id = req.query.id
 
     const count = await Badge.destroy({
         where:{
@@ -165,5 +178,5 @@ async function deleteBadge(req,res){
     }
 }
 
-module.exports = {login,logout,getListBadge,getListAccess,updateBadgeAccess,createBadge,deleteBadge};
+module.exports = {login,logout,getListBadge,getListAccess,updateBadgeAccess,createBadge,deleteBadge,editBadge};
 

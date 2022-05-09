@@ -15,7 +15,7 @@ export default {
   name: 'Header',
   data: () => ({
         links: [
-            {title:'Badge', path:'/'},
+            {title:'Badge', path:'/badges'},
             {title:'Objets connectés', path:'/'},
             {title:"Historique d'accès", path:'/'},
             {title:'Connecter', path:'/'},

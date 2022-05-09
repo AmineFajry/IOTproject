@@ -1,0 +1,113 @@
+<template>
+  <div>
+    <h1 class="text-center">Liste des badges</h1>
+    <CreateBadge @click="createBadge"></CreateBadge>
+      <v-data-table
+          :headers="header"
+          :items="badges"
+      >
+        <template v-slot:[`item.autorisation`]="{ item }">
+          <v-icon v-if="item.autorisation"
+              small
+              color="green"
+              class="mr-2"
+          >
+            mdi-check
+          </v-icon>
+          <v-icon v-else
+                  color="red"
+                  small
+                  class="mr-2"
+          >
+            mdi-close
+          </v-icon>
+        </template>
+        <template v-slot:[`item.actions`]="{ item }">
+          <EditBadge :id="item.id" @click="updateBadge">
+          </EditBadge>
+          <v-icon
+              small
+              @click="deleteBadge(item.id)"
+          >
+            mdi-delete
+          </v-icon>
+        </template>
+      </v-data-table>
+  </div>
+</template>
+
+<script>
+import {mapActions} from "vuex";
+import CreateBadge from "@/components/EditBadge/CreateBadge";
+import EditBadge from "@/components/CreateBadge/EditBadge";
+
+export default {
+  // eslint-disable-next-line vue/multi-word-component-names
+  name: "Badge",
+  components:{CreateBadge, EditBadge},
+  data(){
+    return{
+      badges:[],
+      header:[
+        {
+          text: 'Adresse du badge',
+          value: 'badgeAddress',
+        },
+        {
+          text: 'Nom du possesseur',
+          value: 'nom',
+        },
+        {
+          text: 'Prénom du possesseur',
+          value: 'prenom',
+        },
+        {
+          text: 'Est autorisé',
+          value: 'autorisation',
+        },
+        {
+          text: 'Date de création',
+          value: 'createdAt',
+        },
+        {
+          text: 'Actions',
+          value: 'actions',
+        }
+      ]
+    }
+  },
+  mounted() {
+    this.getBadges().then(result=>{
+      this.badges = result.data.message
+    })
+  },
+  computed:{
+  },
+  methods:{
+    ...mapActions(['getBadges','removeBadge','editBadge','storeBadge']),
+    deleteBadge(id){
+      this.removeBadge({id}).then(result=>{
+        if(!result.data.error && result.data.message){
+          this.badges = this.badges.filter(_badge => !_badge.id === id)
+        }
+      })
+    },
+    updateBadge(data){
+      this.editBadge({badge:data.badge}).then(result=>{
+        console.log(result)
+        data.dialog.value = false
+      })
+    },
+    createBadge(data){
+      this.storeBadge({badge:data.badge}).then(result=>{
+        console.log(result)
+        data.dialog.value = false
+      })
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+</style>

@@ -10,6 +10,7 @@ export default new Vuex.Store({
       email: localStorage.getItem("email") || null,
       token: localStorage.getItem("token") || null,
     },
+    badges:[]
   },
   getters: {
     authenticating(state) {
@@ -18,6 +19,9 @@ export default new Vuex.Store({
     user(state) {
       return state.user;
     },
+    badges(state) {
+      return state.badges;
+    }
   },
   mutations: {
     setAuthenticating(state, authenticating) {
@@ -28,6 +32,19 @@ export default new Vuex.Store({
       Vue.set(state.user, "token", token);
       Vue.set(state.user, "isAdmin", isAdmin);
     },
+    setBadges(state, badges) {
+      console.log(badges)
+      state.badges = badges
+    },
+    upsertBadge(state,badge){
+      console.log(badge)
+      const index = state.badges.findIndex(_badge => _badge.id === badge.id)
+      console.log(index)
+      if(index !== -1){
+        console.log('ici')
+        Vue.set(state.badges,index,badge)
+      }
+    }
   },
   actions: {
     login({commit}, {email, password}) {
@@ -40,13 +57,39 @@ export default new Vuex.Store({
         commit("setUser", user.data);
         localStorage.setItem("email", user.data.email);
         localStorage.setItem("token", user.data.token);
-        localStorage.setItem("isAdmin", user.data.isAdmin);
       });
       return promise;
     },
     deauthenticate() {
       const email =  localStorage.getItem("email");
       return dataService.logout({email});
+    },
+    getBadges({commit}){
+      const promise = dataService.getBadges();
+      promise.then(result =>{
+        const badges = result.data.message
+        commit('setBadges', badges)
+      })
+      return promise;
+    },
+    removeBadge(_,{id}){
+      return dataService.removeBadge({id});
+    },
+    editBadge({commit},{badge}){
+      const promise = dataService.editBadge({badge});
+      promise.then(result =>{
+        const badge = result.data.message
+        commit('upsertBadge', badge)
+      })
+      return promise;
+    },
+    storeBadge({commit},{badge}){
+      const promise = dataService.storeBadge({badge});
+      promise.then(result =>{
+        const badge = result.data.message
+        commit('upsertBadge', badge)
+      })
+      return promise;
     }
   }
 });

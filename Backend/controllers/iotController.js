@@ -39,7 +39,7 @@ async function badgeAccess(req,res){
     if(!badge){
         res.status(400).json({error:true,message:"NO_DATA"})
     }else{
-        res.status(200).json({error:false,message:badge.autorisation})
+        res.status(200).json({error:false,message: {autorisation:badge.autorisation}})
     }
 }
 

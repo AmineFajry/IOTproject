@@ -28,7 +28,7 @@ try {
     });
     
     User.hasMany(MicroController,{foreignKey: 'user_id', as:'user_microc'});
-    MicroController.hasMany(Badge,{foreignKey: 'microc_id', as:'microc_badge'});
+    User.hasMany(Badge,{foreignKey: 'user_id', as:'user_badge'});
 
     sequelize.sync()
 } catch (error) {

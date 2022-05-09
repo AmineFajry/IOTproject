@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '@/components/Login/Login'
+import Badge from "@/components/Badge/Badge";
 
 Vue.use(VueRouter)
 
@@ -9,6 +10,11 @@ const routes = [
         path: '/',
         name: 'Login',
         component: Login
+    },
+    {
+        path: '/Badges',
+        name: 'Badge',
+        component: Badge
     },
 ]
 
