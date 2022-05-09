@@ -32,10 +32,10 @@ export default {
           dialogDelete: false,
           headers: [
           { text: 'Idantifient', value: 'id' },
+          { text: 'Numéro User', value: 'user_id' },
           { text: 'Adresse Mac', value: 'addrMac' },
           { text: 'Seuil de Luminosité', value: 'seuilLuminosite'},
-          { text: 'Numéro User', value: 'user_id' },
-          { text: 'Crée', value: 'createdAt' },
+          { text: 'Ajouté le', value: 'createdAt' },
           { text: 'Actions', value: 'actions', sortable: false }
         ],
         rows: [
