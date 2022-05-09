@@ -5,6 +5,7 @@ const cors = require('cors')
 
 
 const userController = require('../controllers/userController');
+const iotController = require('../controllers/iotController');
 const {checkAuth} = require("../middlewares/auth");
 
 router.post('/login',cors(config.corsOptions),userController.login);
@@ -14,5 +15,12 @@ router.get('/user/listbadge',cors(config.corsOptions),checkAuth,userController.g
 router.get('/user/listaccess',cors(config.corsOptions),checkAuth,userController.getListAccess);
 router.put('/user/bagde/update/access',cors(config.corsOptions),checkAuth,userController.updateBadgeAccess);
 
+router.post('/user/badge',cors(config.corsOptions),checkAuth,userController.createBadge);
+router.delete('/user/badge',cors(config.corsOptions),checkAuth,userController.deleteBadge);
+
+
+
+router.get('/iot/brightness',cors(config.corsOptions),iotController.getBrightness)
+router.get('/iot/access',cors(config.corsOptions),iotController.badgeAccess)
 
 module.exports = router;

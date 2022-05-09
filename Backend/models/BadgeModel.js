@@ -12,7 +12,7 @@ const Badge = sequelize.define('Badge', {
     autorisation: {
         type: DataTypes.BOOLEAN,
     },
-    badgeAdress:{
+    badgeAddress:{
         type: DataTypes.STRING,
         allowNull: false,
         unique:true,

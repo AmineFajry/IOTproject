@@ -1,8 +1,8 @@
-const User = require('../models/userModel')
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
 const MicroController = require('../models/MicroControllerModel')
 const Badge = require('../models/BadgeModel')
+const User = require('../models/userModel')
 
 async function login(req, res)
 {
@@ -64,6 +64,7 @@ async function logout(req,res){
     res.status(200).json({error:false});
 }
 
+// badge //
 async function getListBadge(req,res){
     try {
         const email = req.query.email
@@ -117,6 +118,7 @@ async function getListAccess(req,res){
         console.log(e)
     }
 }
+
 async function updateBadgeAccess(req,res){
     const data = req.body
     const badge = await Badge.findOne({
@@ -131,9 +133,37 @@ async function updateBadgeAccess(req,res){
     if(!badgeSaved){
         res.status(400).json({error:true,message:'DATA_NO_FOUND'})
     }else{
-        res.status(400).json({error:false,message:badgeSaved})
+        res.status(200).json({error:false,message:badgeSaved})
     }
 }
 
-module.exports = {login,logout,getListBadge,getListAccess,updateBadgeAccess};
+async function createBadge(req,res){
+    const data = req.body
+
+    const badge = await Badge.create(data)
+
+    if(!badge){
+        res.status(400).json({error:true,message:'DATA_NO_SAVE'})
+    }else{
+        res.status(200).json({error:false,message:badge})
+    }
+}
+
+async function deleteBadge(req,res){
+    const id = req.body.id
+
+    const count = await Badge.destroy({
+        where:{
+            id:id
+        }
+    })
+
+    if(count !== 1){
+        res.status(400).json({error:true,message:'DATA_NO_DELETED'})
+    }else{
+        res.status(200).json({error:false,message:count})
+    }
+}
+
+module.exports = {login,logout,getListBadge,getListAccess,updateBadgeAccess,createBadge,deleteBadge};
 

@@ -6,7 +6,7 @@ const apiRoute = require('./routes/apiRoute')
 const sequelize = require("./db.js")
 const MicroController = require('./models/MicroControllerModel')
 const Badge = require('./models/BadgeModel')
-const User = require('./models/UserModel')
+const User = require('./models/userModel')
 
 app.use(express.json());
 app.use(cors(config.corsOptions))
