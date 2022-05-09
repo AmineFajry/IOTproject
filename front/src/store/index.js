@@ -23,10 +23,9 @@ export default new Vuex.Store({
     setAuthenticating(state, authenticating) {
       state.authenticating = authenticating;
     },
-    setUser(state, { email, token, isAdmin}) {
+    setUser(state, { email, token}) {
       Vue.set(state.user, "email", email);
       Vue.set(state.user, "token", token);
-      Vue.set(state.user, "isAdmin", isAdmin);
     },
   },
   actions: {
@@ -40,7 +39,6 @@ export default new Vuex.Store({
         commit("setUser", user.data);
         localStorage.setItem("email", user.data.email);
         localStorage.setItem("token", user.data.token);
-        localStorage.setItem("isAdmin", user.data.isAdmin);
       });
       return promise;
     },
