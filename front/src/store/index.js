@@ -9,8 +9,10 @@ export default new Vuex.Store({
     user: {
       email: localStorage.getItem("email") || null,
       token: localStorage.getItem("token") || null,
+      id:null
     },
-    badges:[]
+    badges:[],
+    historique:[]
   },
   getters: {
     authenticating(state) {
@@ -34,6 +36,9 @@ export default new Vuex.Store({
     },
     setBadges(state, badges) {
       state.badges = badges
+    },
+    setHistorique(state, historique) {
+      state.historique = historique
     },
     upsertBadge(state,badge){
       const index = state.badges.findIndex(_badge => _badge.id === badge.id)
@@ -105,6 +110,14 @@ export default new Vuex.Store({
       promise.then(result =>{
         const badge = result.data.message
         commit('upsertBadge', badge)
+      })
+      return promise;
+    },
+    getHistorique({commit}){
+      const promise = dataService.getHistorique();
+      promise.then(result =>{
+        const historique = result.data.message.historique
+        commit('setHistorique', historique)
       })
       return promise;
     },

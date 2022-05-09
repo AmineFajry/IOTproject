@@ -15,31 +15,53 @@ export default {
   name: 'Header',
   data: () => ({
         links: [
-            {title:'Badge', path:'/badges'},
-            {title:'Objets connectés', path:'/iot'},
-            {title:"Historique d'accès", path:'/'},
-            {title:'Connecter', path:'/'},
-            {title:'Déconnecter', path:'/logout'},
         ],
     }),
     mounted(){
+      this.prepareLink()
+
     },
     methods: {
         ...mapActions(["deauthenticate"]),
         logout(link) {
            if(link.path === "/logout" && this.user.token && this.user.email) {
                 this.deauthenticate().then(()=> {
-                  router.push({path: "/"})
+                  this.prepareLink()
+                  router.push({path: "/login"})
                   localStorage.removeItem("email");
                   localStorage.removeItem("token");
                   window.location.reload();
                 });
            }
+        },
+      prepareLink(){
+        const authLink = [
+          {title:'Badge', path:'/badges'},
+          {title:'Objets connectés', path:'/iot'},
+          {title:"Historique d'accès", path:'/historique'},
+          {title:'Déconnecter', path:'/logout'},
+        ]
+        const nonAuth = [
+          {title:'Connecter', path:'/'},
+        ]
+        if(this.authenticating){
+          this.links = authLink
+        }else{
+          this.links = nonAuth
         }
+      }
     },
   computed:{
-    ...mapGetters(["user"]),
-  }
+    ...mapGetters(["user","authenticating"])
+  },
+  watch: {
+    // whenever question changes, this function will run
+    authenticating(newAuthenticating, oldAuthenticating) {
+      if (newAuthenticating !== oldAuthenticating) {
+          this.prepareLink()
+      }
+    }
+  },
 }
 
 </script>

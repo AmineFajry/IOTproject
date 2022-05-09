@@ -54,11 +54,11 @@ export default {
           value: 'badgeAddress',
         },
         {
-          text: 'Nom du possesseur',
+          text: 'Nom',
           value: 'nom',
         },
         {
-          text: 'Prénom du possesseur',
+          text: 'Prénom',
           value: 'prenom',
         },
         {

@@ -19,6 +19,9 @@ class DataService {
     storeBadge({badge}) {
         return http.post('/user/badge', {badge})
     }
+    getHistorique() {
+        return http.get('/user/listaccess')
+    }
     getIOTData(){
         return http.get("/user/listobject");
     }

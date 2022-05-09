@@ -83,7 +83,7 @@ export default {
       validate () {
         this.$refs.form.validate();
         this.login({email: this.email, password: this.password}).then((result) => {
-          if(!result.data.error) router.push({path: "/dashboard"})
+          if(!result.data.error) router.push({path: "/iot"})
           else {
             this.messageError = 'Mot de passe invalide'
           }
