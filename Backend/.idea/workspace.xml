@@ -2,14 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="538621df-83c8-4850-bd0c-234191d2626b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/controllers/iotController.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front/src/components/Header/Header.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front/src/components/Login/Login.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front/src/components/Login/Login.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front/src/plugins/vuetify.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front/src/router/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front/src/service/dataService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front/src/service/http-common.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front/src/store/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/microcController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/microcController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/userController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/BadgeModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/BadgeModel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/MicroControllerModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/MicroControllerModel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/apiRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/apiRoute.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
