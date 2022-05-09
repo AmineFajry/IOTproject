@@ -15,7 +15,8 @@ const MicroController = sequelize.define('MicroController', {
     },
     addrMac: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true,
+        unique:true
     }
 });
 

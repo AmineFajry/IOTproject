@@ -1,9 +1,8 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
-const User = require('../models/userModel')
 const MicroController = require('../models/MicroControllerModel')
 const Badge = require('../models/BadgeModel')
-const User = require('../models/UserModel')
+const User = require('../models/userModel')
 
 async function login(req, res)
 {
@@ -65,27 +64,106 @@ async function logout(req,res){
     res.status(200).json({error:false});
 }
 
+// badge //
 async function getListBadge(req,res){
-    const email = req.query.email
-    const badges = await User.findAll({
-        where:{
-            email:email
-        },
-        include:[
-            {
-                model:MicroController,
-                as:'user_microc'
-            }
-        ]
-    })
-    res.status(200).json({error:false,message:badges});
+    try {
+        const email = req.query.email
+        const user = await User.findOne({
+            where:{
+                email:email
+            },
+            include:[
+                {
+                    model:MicroController,
+                    as:'user_microc',
+                    include:[
+                        {
+                            model:Badge,
+                            as:"microc_badge"
+                        }
+                    ]
+                },
+
+            ]
+        })
+        res.status(200).json({error:false,message:user.user_microc});
+    }catch (e) {
+        console.log(e)
+    }
 }
 
 async function getListAccess(req,res){
+    try {
+        const email = req.query.email
+        const user = await User.findOne({
+            where:{
+                email:email
+            },
+            include:[
+                {
+                    model:MicroController,
+                    as:'user_microc',
+                    include:[
+                        {
+                            model:Badge,
+                            as:'badges'
+                        }
+                    ]
+                },
 
-    res.status(200).json({error:false});
+            ]
+        })
+        res.status(200).json({error:false,message:user.user_microc});
+    }catch (e) {
+        console.log(e)
+    }
 }
 
+async function updateBadgeAccess(req,res){
+    const data = req.body
+    const badge = await Badge.findOne({
+        where:{
+            badgeAdress : data.badgeAdress
+        }
+    })
 
-module.exports = {login,logout};
+    badge.autorisation = data.autorisation
+    const badgeSaved = await badge.save()
+
+    if(!badgeSaved){
+        res.status(400).json({error:true,message:'DATA_NO_FOUND'})
+    }else{
+        res.status(200).json({error:false,message:badgeSaved})
+    }
+}
+
+async function createBadge(req,res){
+    const data = req.body
+
+    const badge = await Badge.create(data)
+
+    if(!badge){
+        res.status(400).json({error:true,message:'DATA_NO_SAVE'})
+    }else{
+        res.status(200).json({error:false,message:badge})
+    }
+}
+
+async function deleteBadge(req,res){
+    const id = req.body.id
+
+    const count = await Badge.destroy({
+        where:{
+            id:id
+        }
+    })
+
+    if(count !== 1){
+        res.status(400).json({error:true,message:'DATA_NO_DELETED'})
+    }else{
+        res.status(200).json({error:false,message:count})
+    }
+}
+
+module.exports = {login,logout,getListBadge,getListAccess,updateBadgeAccess,createBadge,deleteBadge};
 

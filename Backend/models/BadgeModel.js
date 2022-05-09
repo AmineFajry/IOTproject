@@ -11,6 +11,14 @@ const Badge = sequelize.define('Badge', {
     },
     autorisation: {
         type: DataTypes.BOOLEAN,
+    },
+    badgeAddress:{
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique:true,
+    },
+    autorisation: {
+        type: DataTypes.BOOLEAN,
         allowNull: false
     },
     prenom: {
