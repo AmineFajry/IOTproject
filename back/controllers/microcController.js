@@ -2,7 +2,7 @@ const MicroController = require('../models/MicroControllerModel');
 const User = require('../models/UserModel');
 const { use } = require('../routes/apiRoute');
 
-async function data(req,res)
+async function getMicroc(req,res)
 {
     try{
         const data = await MicroController.findAll()
@@ -13,11 +13,11 @@ async function data(req,res)
     }
 }
 
-async function create(req,res)
+async function createMicroc(req,res)
 {
     let seuil = req.body.seuilLuminosite
-    let addr= req.body.addrMac  
-
+    let addr = req.body.addrMac  
+   
     const userFind = await User.findOne({
         where: {
             email: req.body.email
@@ -105,4 +105,4 @@ async function updateLightSensor(req,res)
     }
 }
 
-module.exports = {data,create,updateLightSensor,deleteMicroc};
+module.exports = {getMicroc,createMicroc,updateLightSensor,deleteMicroc};

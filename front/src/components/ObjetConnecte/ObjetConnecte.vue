@@ -35,7 +35,7 @@ export default {
           { text: 'Numéro User', value: 'user_id' },
           { text: 'Adresse Mac', value: 'addrMac' },
           { text: 'Seuil de Luminosité', value: 'seuilLuminosite'},
-          { text: 'Ajouté le', value: 'createdAt' },
+          { text: 'Date de création', value: 'createdAt' },
           { text: 'Actions', value: 'actions', sortable: false }
         ],
         rows: [
