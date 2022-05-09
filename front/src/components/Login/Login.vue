@@ -1,15 +1,13 @@
 <template>
   <div>
     <v-alert
-        :class="!messageError ? 'hidden' : 'display'"
+        :class="!messageError  ? 'hidden' : 'display'"
         border="top"
         color="red"
         dark
     >
       {{ messageError }}
     </v-alert>
-
-
       <v-form ref="form" v-model="valid" lazy-validation>
 
           <v-text-field
@@ -46,7 +44,7 @@
 </template>
 
 <script>
-import router from "@/router";
+//import router from "@/router";
 import { mapActions,mapGetters } from "vuex";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -80,14 +78,18 @@ export default {
     },
     methods: {
       ...mapActions(['login']),
-      validate () {
-        this.$refs.form.validate();
-        this.login({email: this.email, password: this.password}).then((result) => {
-          if(!result.data.error) router.push({path: "/dashboard"})
-          else {
-            this.messageError = 'Mot de passe invalide'
-          }
-        });
+      validate: function () {
+        if (this.$refs.form.validate()) {
+          this.login({email: this.email, password: this.password}).then((result) => {
+            if (!result.data.error) {
+              console.log(result)
+            }
+            else {
+              this.messageError = 'Mot de passe invalide'
+            }
+          });
+        }
+
       }
     }
   }
