@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
 const MicroController = require('../models/MicroControllerModel')
 const Badge = require('../models/BadgeModel')
-const User = require('../models/userModel')
+const User = require('../models/UserModel')
 
 async function login(req, res)
 {
