@@ -27,10 +27,9 @@ export default new Vuex.Store({
     setAuthenticating(state, authenticating) {
       state.authenticating = authenticating;
     },
-    setUser(state, { email, token, isAdmin}) {
+    setUser(state, { email, token}) {
       Vue.set(state.user, "email", email);
       Vue.set(state.user, "token", token);
-      Vue.set(state.user, "isAdmin", isAdmin);
     },
     setBadges(state, badges) {
       console.log(badges)
@@ -90,6 +89,18 @@ export default new Vuex.Store({
         commit('upsertBadge', badge)
       })
       return promise;
+    },
+    getIOTdata(){
+      return dataService.getIOTData();
+    },
+    deleteIOTdata(_,{id}){
+      return dataService.deleteIOTData({id});
+    },
+    postIOTData(_,{seuil,addrMac}){
+      return dataService.postIOTData({seuil,addrMac});
+    },
+    updateLightSensor(_,{seuil,addrMac}){
+      return dataService.updateLightSensor({seuil,addrMac});
     }
   }
 });

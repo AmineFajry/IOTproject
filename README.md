@@ -13,7 +13,7 @@ npm start
 ```
 
 
-# front
+# Frontend
 
 ## Project setup
 ```

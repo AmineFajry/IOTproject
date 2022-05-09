@@ -16,7 +16,7 @@ export default {
   data: () => ({
         links: [
             {title:'Badge', path:'/badges'},
-            {title:'Objets connectés', path:'/'},
+            {title:'Objets connectés', path:'/iot'},
             {title:"Historique d'accès", path:'/'},
             {title:'Connecter', path:'/'},
             {title:'Déconnecter', path:'/logout'},

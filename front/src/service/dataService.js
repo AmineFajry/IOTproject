@@ -16,8 +16,21 @@ class DataService {
     editBadge({badge}){
         return http.put('/user/badge',{badge})
     }
-    storeBadge({badge}){
-        return http.post('/user/badge',{badge})
+    storeBadge({badge}) {
+        return http.post('/user/badge', {badge})
+    }
+    getIOTData(){
+        return http.get("/user/listobject");
+    }
+    deleteIOTData({id}){
+        return http.delete("/user/listobject",{params:{id}})
+    }
+    postIOTData({seuil,addrMac}){
+        return http.post("/user/listobject",{params:{seuil,addrMac}})
+    }
+    updateLightSensor({seuil,addrMac})
+    {
+        return http.post("/user/update/lightsensor",{params:{seuil,addrMac}})
     }
 }
 
