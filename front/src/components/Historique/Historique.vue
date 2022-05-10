@@ -101,7 +101,12 @@ export default {
   methods:{
     ...mapActions(['getHistorique','getBadges']),
     filter(){
-      if(this.badgeSelected !== this.badgeSelect[0]){
+      if(this.badgeSelected !== this.badgeSelect[0] && this.objectSelected !== this.objectAddrSelect[0]){
+        this.historiqueData = this.historique.filter(_hist => {
+          return _hist.badgeAddress === this.badgeSelected && _hist.addrMac === this.objectSelected
+        })
+      }
+      else if(this.badgeSelected !== this.badgeSelect[0]){
         this.historiqueData = this.historique.filter(_hist => {
           return _hist.badgeAddress === this.badgeSelected
         })
