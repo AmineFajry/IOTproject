@@ -27,11 +27,11 @@ export default {
            if(link.path === "/logout" && this.user.token && this.user.email) {
                 this.deauthenticate().then(()=> {
                   this.prepareLink()
-                  router.push({path: "/login"})
                   localStorage.removeItem("email");
                   localStorage.removeItem("token");
                   localStorage.removeItem("id");
                   localStorage.removeItem("authenticating");
+                  router.push({path: "/"})
                   window.location.reload();
                 });
            }
