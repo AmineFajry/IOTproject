@@ -1,14 +1,23 @@
 <template>
-  <div>
-    <h1 class="text-center">Historique des accès</h1>
-    <v-data-table
-        :headers="header"
-        :items="historique"
-    >
-    </v-data-table>
-  </div>
+  <v-container>
+      <h1 class="text-center">Historique des accès</h1>
+    <v-row>
+          <v-select
+              class="col-md-3"
+              :items="objectAddr"
+          >
+          </v-select>
+          <v-select
+              class="col-md-3 offset-1">
+          </v-select>
+    </v-row>
+      <v-data-table
+          :headers="header"
+          :items="historique"
+      >
+      </v-data-table>
+    </v-container>
 </template>
-
 <script>
 import {mapActions} from "vuex";
 
@@ -17,6 +26,7 @@ export default {
   name: "Historique",
   data(){
     return {
+      objectAddr:[],
       header:[
         {
           text:'Objet connecté',
@@ -51,6 +61,9 @@ export default {
 
 
        historique.map(_machine =>{
+            if(!this.objectAddr.includes(_machine.addrMac)){
+              this.objectAddr.push(_machine.addrMac)
+            }
            _machine.Historics.map(_historic =>{
             let badge = badges.find(_badge => _badge.id === _historic.BadgeId)
 

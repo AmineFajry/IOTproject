@@ -5,7 +5,7 @@ import dataService from "@/service/dataService";
 Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
-    authenticating: false,
+    authenticating: localStorage.getItem("authenticating") || false,
     user: {
       email: localStorage.getItem("email") || null,
       token: localStorage.getItem("token") || null,
@@ -62,11 +62,13 @@ export default new Vuex.Store({
         return;
       }
       commit("setAuthenticating", true);
+      localStorage.setItem("authenticating", true);
       const promise = dataService.login({email, password});
       promise.then(user=>{
         commit("setUser", user.data);
         localStorage.setItem("email", user.data.email);
         localStorage.setItem("token", user.data.token);
+
       });
       return promise;
     },
