@@ -12,7 +12,8 @@ export default new Vuex.Store({
       id:null
     },
     badges:[],
-    historique:[]
+    historique:[],
+    microc:[]
   },
   getters: {
     authenticating(state) {
@@ -23,6 +24,10 @@ export default new Vuex.Store({
     },
     badges(state) {
       return state.badges;
+    },
+    microc(state)
+    {
+      return state.microc;
     }
   },
   mutations: {
@@ -40,6 +45,9 @@ export default new Vuex.Store({
     },
     setHistorique(state, historique) {
       state.historique = historique
+    },
+    setMicrocs(state, microc){
+      state.microc = microc
     },
     upsertBadge(state,badge){
       const index = state.badges.findIndex(_badge => _badge.id === badge.id)

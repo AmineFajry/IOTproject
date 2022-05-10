@@ -34,8 +34,6 @@ try {
         foreignKey: "badge_id",
     });
 */
-
-    
     User.hasMany(MicroController,{foreignKey: 'user_id', as:'user_microc'});
     User.hasMany(Badge,{foreignKey: 'user_id', as:'user_badge'});
 

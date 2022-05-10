@@ -56,7 +56,7 @@ async function createMicroc(req,res)
 
 async function deleteMicroc(req,res){
 
-    const id = req.body.id
+    const id = req.query.id
 
     const count = await MicroController.destroy({
         where:{
