@@ -23,6 +23,7 @@
              <v-text-field
                 label="Adresse MAC"
                 v-model="iot['addrMac']"
+                readonly
              >
              </v-text-field>
               <v-text-field
@@ -54,6 +55,7 @@ import {mapGetters} from "vuex";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "EditObjetConnecte",
+  props:['id','addrMac'],
   data(){
     return{
       iot:{
@@ -66,6 +68,7 @@ export default {
     }
   },
   mounted() {
+      this.iot.addrMac = this.addrMac
   },
   computed:{
     ...mapGetters([''])

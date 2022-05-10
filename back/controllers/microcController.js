@@ -61,11 +61,11 @@ async function deleteMicroc(req,res){
 
 async function updateLightSensor(req,res)
 {
-    const data = req.body.iot
+    const data = req.body
 
     const microc = await MicroController.findOne({
         where:{
-            addrMac : data.addrMac
+            addrMac : data.iot.addrMac
         }
     })
 
@@ -79,7 +79,7 @@ async function updateLightSensor(req,res)
 
     if(microc !== null && userFind !== null)
     {
-        microc.seuilLuminosite = data.seuilLuminosite
+        microc.seuilLuminosite = data.iot.seuilLuminosite
         microSaved = await microc.save()
     }else{
         res.status(401).json({error:true,message:'DATA_NOT_FOUND'})

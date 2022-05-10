@@ -33,7 +33,7 @@ class DataService {
     }
     updateLightSensor({iot})
     {
-        return http.post("/user/update/lightsensor",{iot})
+        return http.put("/user/update/lightsensor",{iot})
     }
 }
 

@@ -16,7 +16,7 @@
 
             <template v-slot:[`item.actions`]="{ item }">
 
-            <EditObjetConnecte :id="item.id" :addrMac ="item.addrMac" @click="updateIOT"/>
+            <EditObjetConnecte :id="item.id" :addrMac="item.addrMac" @click="updateIOT"/>
 
             <v-icon small @click="deleteIOT(item.id)">mdi-delete</v-icon>
 
