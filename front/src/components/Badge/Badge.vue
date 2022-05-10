@@ -1,11 +1,15 @@
 <template>
-  <div>
-    <h1 class="text-center">Liste des badges</h1>
+  <v-container>
+
+  <h1 class="text-center">Liste des badges</h1>
     <CreateBadge @click="createBadge"></CreateBadge>
       <v-data-table
           :headers="header"
           :items="badges"
       >
+        <template v-slot:[`item.createdAt`]="{ item }">
+          {{ formatDate(item.createAt) }}
+        </template>
         <template v-slot:[`item.autorisation`]="{ item }">
           <v-icon v-if="item.autorisation"
               small
@@ -34,13 +38,14 @@
           </v-icon>
         </template>
       </v-data-table>
-  </div>
+  </v-container>
 </template>
 
 <script>
 import {mapActions,mapGetters} from "vuex";
 import CreateBadge from "@/components/EditBadge/EditBadge";
 import EditBadge from "@/components/CreateBadge/CreateBadge";
+import moment from "moment";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -105,6 +110,9 @@ export default {
         console.log(result)
         data.dialog.value = false
       })
+    },
+    formatDate(date){
+      return moment(date).format('LLLL')
     }
   }
 }

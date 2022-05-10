@@ -25,6 +25,9 @@ export default new Vuex.Store({
     badges(state) {
       return state.badges;
     },
+    historique(state) {
+      return state.historique;
+    },
     microc(state)
     {
       return state.microc;

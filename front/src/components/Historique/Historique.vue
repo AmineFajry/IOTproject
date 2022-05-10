@@ -6,6 +6,8 @@
               class="col-md-3"
               label="Objet connecté"
               :items="objectAddrSelect"
+              v-model="objectSelected"
+              @input="filter"
           >
           </v-select>
           <v-select
@@ -13,7 +15,7 @@
               label="Badge"
               :items="badgeSelect"
               v-model="badgeSelected"
-              @input="filterByBadge"
+              @input="filter"
           >
           </v-select>
     </v-row>
@@ -21,20 +23,25 @@
           :headers="header"
           :items="historiqueData"
       >
+        <template v-slot:[`item.date`]="{ item }">
+          {{ formatDate(item.date) }}
+        </template>
       </v-data-table>
     </v-container>
 </template>
 <script>
-import {mapActions,mapGetters} from "vuex";
+import {mapActions} from "vuex";
+import moment from "moment";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Historique",
   data(){
     return {
-      objectAddrSelect:[],
-      badgeSelect:[],
-      badgeSelected:'',
+      objectAddrSelect:['tout les objets'],
+      objectSelected:'tout les objets',
+      badgeSelect:['tout les badges'],
+      badgeSelected:'tout les badges',
       header:[
         {
           text:'Objet connecté',
@@ -57,7 +64,8 @@ export default {
           value:'date'
         }
       ],
-      historiqueData:[]
+      historiqueData:[],
+      historique:[]
     }
   },
   mounted() {
@@ -88,20 +96,29 @@ export default {
         })
       })
     })
+    this.historique = this.historiqueData
   },
   methods:{
     ...mapActions(['getHistorique','getBadges']),
-    filterByBadge(){
-      console.log( this.badgeSelected)
-      console.log(this.historique)
-      this.historiqueData = this.historique.filter(_hist => {
+    filter(){
+      if(this.badgeSelected !== this.badgeSelect[0]){
+        this.historiqueData = this.historique.filter(_hist => {
           return _hist.badgeAddress === this.badgeSelected
         })
+      }else if(this.objectSelected !== this.objectAddrSelect[0]){
+        this.historiqueData = this.historique.filter(_hist => {
+          return _hist.addrMac === this.objectSelected
+        })
+      }
+      else{
+        this.historiqueData = this.historique
+      }
+    },
+    formatDate(date){
+      return moment(date).format('LLLL')
     }
   },
   computed:{
-    ...mapGetters(['historique']),
-
   }
 }
 </script>
