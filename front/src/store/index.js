@@ -184,8 +184,9 @@ export default new Vuex.Store({
       return promise;
 
     },
-    updateLightSensor({commit},{seuil,addrMac}){
-      const promise =  dataService.updateLightSensor({seuil,addrMac});
+    updateLightSensor({commit},{iot}){
+      console.log(iot)
+      const promise =  dataService.updateLightSensor({iot});
       promise.then(result =>{
         const microc = result.data.message
         commit('upsertLightSensor', microc)

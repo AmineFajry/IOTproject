@@ -31,9 +31,9 @@ class DataService {
     postIOTData({iot}){
         return http.post("/user/listobject",{iot})
     }
-    updateLightSensor({seuil,addrMac})
+    updateLightSensor({iot})
     {
-        return http.post("/user/update/lightsensor",{params:{seuil,addrMac}})
+        return http.post("/user/update/lightsensor",{iot})
     }
 }
 

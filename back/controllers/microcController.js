@@ -31,13 +31,13 @@ async function createMicroc(req,res)
         });
 
     }else{
-        res.status(400).json({error:true,message:'DATA_ALREADY_EXIST'})
+        res.status(401).json({error:true,message:'DATA_ALREADY_EXIST'})
     }
 
     const microcSaved = await microc.save(microc)
 
     if(!microcSaved){
-        res.status(401).json({error:true,message:'DATA_NO_FOUND'})
+        res.status(400).json({error:true,message:'DATA_NO_FOUND'})
     }else{
         res.status(200).json({error:false,message:microcSaved})
     }
@@ -54,14 +54,14 @@ async function deleteMicroc(req,res){
         if(count !== 1){
         res.status(400).json({error:true,message:'DATA_NO_DELETED'})
     }else{
-        res.status(200).json({error:false,message:count})
+        res.status(200).json({error:false,message:count})   
     }
 }
 
 
 async function updateLightSensor(req,res)
 {
-    const data = req.body
+    const data = req.body.iot
 
     const microc = await MicroController.findOne({
         where:{
@@ -82,7 +82,7 @@ async function updateLightSensor(req,res)
         microc.seuilLuminosite = data.seuilLuminosite
         microSaved = await microc.save()
     }else{
-        res.status(400).json({error:true,message:'DATA_NOT_FOUND'})
+        res.status(401).json({error:true,message:'DATA_NOT_FOUND'})
     }
 
     if(!microSaved){
