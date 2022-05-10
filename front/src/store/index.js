@@ -9,7 +9,7 @@ export default new Vuex.Store({
     user: {
       email: localStorage.getItem("email") || null,
       token: localStorage.getItem("token") || null,
-      id:null
+      id:    localStorage.getItem("id") || null,
     },
     badges:[],
     historique:[],
@@ -76,7 +76,7 @@ export default new Vuex.Store({
         commit("setUser", user.data);
         localStorage.setItem("email", user.data.email);
         localStorage.setItem("token", user.data.token);
-
+        localStorage.setItem("id", user.data.id);
       });
       return promise;
     },

@@ -30,6 +30,7 @@ export default {
                   router.push({path: "/login"})
                   localStorage.removeItem("email");
                   localStorage.removeItem("token");
+                  localStorage.removeItem("authenticating");
                   window.location.reload();
                 });
            }

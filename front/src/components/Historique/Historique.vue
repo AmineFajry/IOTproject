@@ -4,29 +4,37 @@
     <v-row>
           <v-select
               class="col-md-3"
-              :items="objectAddr"
+              label="Objet connecté"
+              :items="objectAddrSelect"
           >
           </v-select>
           <v-select
-              class="col-md-3 offset-1">
+              class="col-md-3 offset-1"
+              label="Badge"
+              :items="badgeSelect"
+              v-model="badgeSelected"
+              @input="filterByBadge"
+          >
           </v-select>
     </v-row>
       <v-data-table
           :headers="header"
-          :items="historique"
+          :items="historiqueData"
       >
       </v-data-table>
     </v-container>
 </template>
 <script>
-import {mapActions} from "vuex";
+import {mapActions,mapGetters} from "vuex";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Historique",
   data(){
     return {
-      objectAddr:[],
+      objectAddrSelect:[],
+      badgeSelect:[],
+      badgeSelected:'',
       header:[
         {
           text:'Objet connecté',
@@ -49,7 +57,7 @@ export default {
           value:'date'
         }
       ],
-      historique:[]
+      historiqueData:[]
     }
   },
   mounted() {
@@ -59,15 +67,16 @@ export default {
       this.getBadges().then(result=>{
         const badges = result.data.message
 
-
        historique.map(_machine =>{
-            if(!this.objectAddr.includes(_machine.addrMac)){
-              this.objectAddr.push(_machine.addrMac)
+            if(!this.objectAddrSelect.includes(_machine.addrMac)){
+              this.objectAddrSelect.push(_machine.addrMac)
             }
            _machine.Historics.map(_historic =>{
             let badge = badges.find(_badge => _badge.id === _historic.BadgeId)
-
-            this.historique.push({
+             if(!this.badgeSelect.includes(badge.badgeAddress)){
+               this.badgeSelect.push(badge.badgeAddress)
+             }
+            this.historiqueData.push({
               addrMac:_machine.addrMac,
               badgeAddress:badge.badgeAddress,
               prenom:badge.prenom,
@@ -77,17 +86,21 @@ export default {
 
           })
         })
-
-
       })
-
-
     })
   },
   methods:{
-    ...mapActions(['getHistorique','getBadges'])
+    ...mapActions(['getHistorique','getBadges']),
+    filterByBadge(){
+      console.log( this.badgeSelected)
+      console.log(this.historique)
+      this.historiqueData = this.historique.filter(_hist => {
+          return _hist.badgeAddress === this.badgeSelected
+        })
+    }
   },
   computed:{
+    ...mapGetters(['historique']),
 
   }
 }
