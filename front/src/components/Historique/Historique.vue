@@ -20,31 +20,59 @@ export default {
       header:[
         {
           text:'Objet connecté',
-          value:'objet_name'
+          value:'addrMac'
         },
         {
           text:'Adresse du badge',
-          value:'badge_addr'
+          value:'badgeAddress'
         },
         {
           text:'nom',
-          value:'badge_nom'
+          value:'prenom'
         },
         {
           text:'prénom',
-          value:'badge_prenom'
+          value:'nom'
+        },
+        {
+          text:'Date',
+          value:'date'
         }
       ],
       historique:[]
     }
   },
-  mounted: function () {
+  mounted() {
     this.getHistorique().then(result=>{
-      console.log(result)
+      const historique = result.data.message
+
+      this.getBadges().then(result=>{
+        const badges = result.data.message
+
+
+       historique.map(_machine =>{
+           _machine.Historics.map(_historic =>{
+            let badge = badges.find(_badge => _badge.id === _historic.BadgeId)
+
+            this.historique.push({
+              addrMac:_machine.addrMac,
+              badgeAddress:badge.badgeAddress,
+              prenom:badge.prenom,
+              nom:badge.nom,
+              date:badge.createdAt
+            })
+
+          })
+        })
+
+
+      })
+
+
     })
   },
   methods:{
-    ...mapActions(['getHistorique'])
+    ...mapActions(['getHistorique','getBadges'])
   },
   computed:{
 

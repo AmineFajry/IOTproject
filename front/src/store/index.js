@@ -30,6 +30,7 @@ export default new Vuex.Store({
       state.authenticating = authenticating;
     },
     setUser(state, { email, token,id}) {
+      console.log(email, token,id)
       Vue.set(state.user, "email", email);
       Vue.set(state.user, "token", token);
       Vue.set(state.user, "id", id);
@@ -43,18 +44,13 @@ export default new Vuex.Store({
     upsertBadge(state,badge){
       const index = state.badges.findIndex(_badge => _badge.id === badge.id)
       if(index !== -1){
-        console.log('ici')
         Vue.set(state.badges,index,badge)
       }else{
         state.badges.push(badge)
       }
     },
     deleteBadge(state, {id}){
-      console.log(id)
       const index = state.badges.findIndex(_badge => _badge.id === id)
-      console.log(state.badges)
-      console.log(index)
-
       if(index !== -1){
         state.badges.splice(index,1)
       }
@@ -69,7 +65,6 @@ export default new Vuex.Store({
       const promise = dataService.login({email, password});
       promise.then(user=>{
         commit("setUser", user.data);
-        console.log(user.data)
         localStorage.setItem("email", user.data.email);
         localStorage.setItem("token", user.data.token);
       });
@@ -88,7 +83,6 @@ export default new Vuex.Store({
       return promise;
     },
     removeBadge({commit},{id}){
-      console.log(id)
       const promise = dataService.removeBadge({id});
       promise.then(result =>{
         if(result.data.message === 1){
@@ -116,7 +110,7 @@ export default new Vuex.Store({
     getHistorique({commit}){
       const promise = dataService.getHistorique();
       promise.then(result =>{
-        const historique = result.data.message.historique
+        const historique = result.data.message
         commit('setHistorique', historique)
       })
       return promise;

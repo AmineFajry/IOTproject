@@ -1,7 +1,6 @@
 <template>
   <div>
-    <v-alert
-        :class="!messageError ? 'hidden' : 'display'"
+    <v-alert v-if="messageError"
         border="top"
         color="red"
         dark
