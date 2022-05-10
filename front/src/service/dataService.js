@@ -28,8 +28,8 @@ class DataService {
     deleteIOTData({id}){
         return http.delete("/user/listobject",{params:{id}})
     }
-    postIOTData({seuil,addrMac}){
-        return http.post("/user/listobject",{params:{seuil,addrMac}})
+    postIOTData({iot}){
+        return http.post("/user/listobject",{iot})
     }
     updateLightSensor({seuil,addrMac})
     {

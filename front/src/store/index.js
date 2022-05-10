@@ -13,7 +13,7 @@ export default new Vuex.Store({
     },
     badges:[],
     historique:[],
-    microc:[]
+    microcs:[]
   },
   getters: {
     authenticating(state) {
@@ -25,12 +25,13 @@ export default new Vuex.Store({
     badges(state) {
       return state.badges;
     },
+
     historique(state) {
       return state.historique;
     },
-    microc(state)
+    microcs(state)
     {
-      return state.microc;
+      return state.microcs;
     }
   },
   mutations: {
@@ -49,8 +50,9 @@ export default new Vuex.Store({
     setHistorique(state, historique) {
       state.historique = historique
     },
-    setMicrocs(state, microc){
-      state.microc = microc
+    setMicrocs(state, microcs){
+      console.log(microcs)
+      state.microcs = microcs
     },
     upsertBadge(state,badge){
       const index = state.badges.findIndex(_badge => _badge.id === badge.id)
@@ -60,10 +62,32 @@ export default new Vuex.Store({
         state.badges.push(badge)
       }
     },
+    upsertMicroc(state,microc){
+      const index = state.microcs.findIndex(_microc => _microc.id === microc.id)
+      if(index !== -1){
+        Vue.set(state.microcs,index,microc)
+      }else{
+        state.microcs.push(microc)
+      }
+    },
+    upsertLightSensor(state,microc){
+      const index = state.microcs.findIndex(_microc => _microc.id === microc.id)
+      if(index !== -1){
+        Vue.set(state.microcs,index,microc)
+      }else{
+        state.microcs.push(microc)
+      }
+    },
     deleteBadge(state, {id}){
       const index = state.badges.findIndex(_badge => _badge.id === id)
       if(index !== -1){
         state.badges.splice(index,1)
+      }
+    },
+    deleteMicorc(state, {id}){
+      const index = state.microcs.findIndex(_microc => _microc.id === id)
+      if(index !== -1){
+        state.microcs.splice(index,1)
       }
     }
   },
@@ -128,17 +152,45 @@ export default new Vuex.Store({
       })
       return promise;
     },
-    getIOTdata(){
-      return dataService.getIOTData();
+    getIOTdata({commit}){
+
+      const promise = dataService.getIOTData();
+      promise.then(result =>{
+        const microcs = result.data
+        commit('setMicrocs', microcs)
+      })
+      return promise;
+
     },
-    deleteIOTdata(_,{id}){
-      return dataService.deleteIOTData({id});
+    deleteIOTdata({commit},{id}){
+      const promise = dataService.deleteIOTData({id});
+
+      promise.then(result =>{
+
+        if(result.data.message === 1){
+
+          commit('deleteMicorc', {id})
+        }
+      })
+
+      return promise;
     },
-    postIOTData(_,{seuil,addrMac}){
-      return dataService.postIOTData({seuil,addrMac});
+    postIOTData({commit},{iot}){
+      const promise = dataService.postIOTData({iot});
+      promise.then(result =>{
+        const microc = result.data.message
+        commit('upsertMicroc', microc)
+      })
+      return promise;
+
     },
-    updateLightSensor(_,{seuil,addrMac}){
-      return dataService.updateLightSensor({seuil,addrMac});
+    updateLightSensor({commit},{seuil,addrMac}){
+      const promise =  dataService.updateLightSensor({seuil,addrMac});
+      promise.then(result =>{
+        const microc = result.data.message
+        commit('upsertLightSensor', microc)
+      })
+      return promise;
     }
   }
 });
