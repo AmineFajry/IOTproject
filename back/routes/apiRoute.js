@@ -24,8 +24,8 @@ router.put('/user/badge',cors(config.corsOptions),checkAuth,userController.editB
 router.get('/iot/brightness',cors(config.corsOptions),iotController.getBrightness)
 router.get('/iot/access',cors(config.corsOptions),iotController.badgeAccess)
 
-router.get('/user/listobject',checkAuth,cors(config.corsOptions),microcController.data);
-router.post('/user/listobject',checkAuth,cors(config.corsOptions),microcController.create);
+router.get('/user/listobject',checkAuth,cors(config.corsOptions),microcController.getMicroc);
+router.post('/user/listobject',checkAuth,cors(config.corsOptions),microcController.createMicroc);
 router.delete('/user/listobject',checkAuth,cors(config.corsOptions),microcController.deleteMicroc);
 router.put('/user/update/lightsensor',checkAuth,cors(config.corsOptions),microcController.updateLightSensor);
 

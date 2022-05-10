@@ -1,75 +1,63 @@
 <template>
-    <v-data-table
-    :headers="headers"
-    :items="rows"
-    hide-default-footer 
-    >
-    <template v-slot:[`item.actions`]="{}">
-            <v-icon
-                small
-                class="mr-2"
-                >
-                mdi-pencil
-            </v-icon>
-            <v-icon
-                small
-                >
-                mdi-delete
-            </v-icon>
+    <div> 
+        <h1 class="text-center">Partie microcontrôleur</h1>
+        <CreateObjetConnecte @click="createIOT"></CreateObjetConnecte>
+        <v-data-table
+        :headers="headers"
+        :items="rows"
+        >
+            <template v-slot:[`item.autorisation`]="{ item }">
+                <v-icon v-if="item.autorisation" small color="green" class="mr-2">mdi-check</v-icon>
+                <v-icon v-else color="red" small class="mr-2"> mdi-close </v-icon>
+            </template>
+
+            <template v-slot:[`item.actions`]="{ item }">
+
+            <EditObjetConnecte :id="item.id" @click="updateIOT"/>
+
+            <v-icon small @click="deleteIOT(item.id)">mdi-delete</v-icon>
+
         </template>
-    </v-data-table>
-    
+
+        </v-data-table>
+    </div> 
 </template>
 
 <script>
+import CreateObjetConnecte from "@/components/ObjetConnecte/CreateObjetConnecte";
+import EditObjetConnecte from "@/components/ObjetConnecte/EditObjetConnecte";
 import { mapActions } from "vuex";
 export default {
     name:"ObjetConnecté",
-    components:{},
+    components:{CreateObjetConnecte,EditObjetConnecte},
     data(){
         return{
-          dialog: false,
-          dialogDelete: false,
           headers: [
           { text: 'Idantifient', value: 'id' },
           { text: 'Numéro User', value: 'user_id' },
           { text: 'Adresse Mac', value: 'addrMac' },
           { text: 'Seuil de Luminosité', value: 'seuilLuminosite'},
-          { text: 'Ajouté le', value: 'createdAt' },
-          { text: 'Actions', value: 'actions', sortable: false }
+          { text: 'Date de création', value: 'createdAt' },
+          { text: 'Actions', value: 'actions' }
         ],
-        rows: [
-          {
-            id: null,
-            addrMac: '',
-            seuilLuminosite: '',
-            user_id: null,
-            createdAt: '',
-          }
-        ],
+        rows: []
         }
     },
     mounted:function(){
-        this.getIOTdata().then(response =>{
-            try{
-                let data = response.data
-                data.forEach(_data => {
-                    this.rows = [{
-                        id:_data.id,
-                        addrMac: _data.addrMac,
-                        seuilLuminosite: _data.seuilLuminosite,
-                        user_id: _data.user_id,
-                        createdAt: _data.createdAt
-                    }]
-                });
-          
-            } catch (error) {
-                 console.error("Parsing error:", error);
-            }
-        })
+        this.getIOTdata().then(response =>{this.rows = response.data})
     },
     methods:{
      ...mapActions(['getIOTdata','deleteIOTdata','postIOTData','updateLightSensor']),
+        createIOT: function (data) {
+            data.iot.user_id = this.user.id
+            console.log(data)
+        },
+        deleteIOT(id){
+            console.log(id)
+        },
+        updateIOT(data){
+            console.log(data)
+        },
     },
     computed:{
     }
