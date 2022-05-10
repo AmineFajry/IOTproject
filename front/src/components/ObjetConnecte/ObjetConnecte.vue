@@ -26,7 +26,7 @@
 <script>
 import CreateObjetConnecte from "@/components/ObjetConnecte/CreateObjetConnecte";
 import EditObjetConnecte from "@/components/ObjetConnecte/EditObjetConnecte";
-import { mapActions } from "vuex";
+import { mapActions,mapGetters } from "vuex";
 export default {
     name:"ObjetConnecté",
     components:{CreateObjetConnecte,EditObjetConnecte},
@@ -47,19 +47,22 @@ export default {
         this.getIOTdata().then(response =>{this.rows = response.data})
     },
     methods:{
-     ...mapActions(['getIOTdata','deleteIOTdata','postIOTData','updateLightSensor']),
+        ...mapActions(['getIOTdata','deleteIOTdata','postIOTData','updateLightSensor']),
         createIOT: function (data) {
             data.iot.user_id = this.user.id
             console.log(data)
         },
         deleteIOT(id){
-            console.log(id)
+          this.deleteIOTdata({id}).then(result=>{
+            console.log(result)
+          })
         },
         updateIOT(data){
             console.log(data)
         },
     },
     computed:{
+       ...mapGetters(['user'])
     }
 }
 </script>
