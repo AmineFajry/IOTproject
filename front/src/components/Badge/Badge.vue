@@ -22,6 +22,7 @@
             mdi-close
           </v-icon>
         </template>
+        
         <template v-slot:[`item.actions`]="{ item }">
           <EditBadge :id="item.id" @click="updateBadge">
           </EditBadge>

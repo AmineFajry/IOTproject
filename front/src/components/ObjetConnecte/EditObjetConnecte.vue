@@ -4,14 +4,14 @@
           max-width="600"
       >
         <template v-slot:activator="{ on, attrs }">
-          <v-btn
-              text
-              class="mr-2 primary"
+          <v-icon
+              small
+              class="mr-2"
               v-bind="attrs"
               v-on="on"
           >
-            Ajouter un microcontrôleur
-          </v-btn>
+            mdi-pencil
+          </v-icon>
         </template>
         <template v-slot:default="dialog">
           <v-card>
@@ -53,8 +53,7 @@ import {mapGetters} from "vuex";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: "CreateObjetConnecte",
-  props:['id'],
+  name: "EditObjetConnecte",
   data(){
     return{
       iot:{
