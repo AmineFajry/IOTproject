@@ -145,7 +145,6 @@ async function createBadge(req,res){
 
 async function editBadge(req,res){
     const data = req.body.badge
-    console.log(data)
 
     const badge = await Badge.findOne({
         where:{

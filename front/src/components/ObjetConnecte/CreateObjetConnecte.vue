@@ -67,11 +67,15 @@ export default {
     }
   },
   mounted() {
+
   },
   computed:{
-    ...mapGetters([''])
+    ...mapGetters(['microcs'])
   },
   methods:{
+    cancel(dialog){
+      dialog.value = false
+    }
   },
 }
 </script>

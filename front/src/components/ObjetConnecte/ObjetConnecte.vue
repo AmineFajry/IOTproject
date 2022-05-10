@@ -50,7 +50,11 @@ export default {
         ...mapActions(['getIOTdata','deleteIOTdata','postIOTData','updateLightSensor']),
         createIOT: function (data) {
             data.iot.user_id = this.user.id
-            console.log(data)
+    
+            this.postIOTData({iot:data.iot}).then(result => {
+                console.log(result)
+                data.dialog.value = false
+            })
         },
         deleteIOT(id){
           this.deleteIOTdata({id}).then(result=>{

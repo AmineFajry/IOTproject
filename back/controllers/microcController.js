@@ -15,23 +15,13 @@ async function getMicroc(req,res)
 
 async function createMicroc(req,res)
 {
-    let seuil = req.body.seuilLuminosite
-    let addr = req.body.addrMac  
-   
-    const userFind = await User.findOne({
-        where: {
-            email: req.body.email
-        }
-    })
-
-    const addrMacFind = await MicroController.findOne({
-        where:{
-            addrMac:addr
-        }
-    })
-
+    
+    let seuil = req.body.iot.seuilLuminosite
+    let addr = req.body.iot.addrMac  
+    const userFind = await User.findOne({where: {email: req.body.email}})
+    const addrMacFind = await MicroController.findOne({ where:{addrMac:addr}})
+ 
     let microc = null
-
     if(!addrMacFind)
     {
         microc = new MicroController({
@@ -44,27 +34,24 @@ async function createMicroc(req,res)
         res.status(400).json({error:true,message:'DATA_ALREADY_EXIST'})
     }
 
-    
     const microcSaved = await microc.save(microc)
 
     if(!microcSaved){
-        res.status(400).json({error:true,message:'DATA_NO_FOUND'})
+        res.status(401).json({error:true,message:'DATA_NO_FOUND'})
     }else{
-        res.status(400).json({error:false,message:microcSaved})
+        res.status(200).json({error:false,message:microcSaved})
     }
 }
 
 async function deleteMicroc(req,res){
-
     const id = req.query.id
-
     const count = await MicroController.destroy({
         where:{
             id:id
         }
     })
-
-    if(count !== 1){
+    
+        if(count !== 1){
         res.status(400).json({error:true,message:'DATA_NO_DELETED'})
     }else{
         res.status(200).json({error:false,message:count})
