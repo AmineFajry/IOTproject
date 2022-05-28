@@ -26,9 +26,10 @@ async function getBrightness(req,res){
 
 async function badgeAccess(req,res){
     const badgeAddr = req.query.badgeAddr
+    const macAddr = req.query.addrMac
 
-    if(!badgeAddr) {
-        res.status(400).json({error:true,message:"badgeAddr require"})
+    if(!badgeAddr || !macAddr) {
+        res.status(400).json({error:true,message:"badgeAddr et adresse mac require"})
     }
 
     const badge = await Badge.findOne({
@@ -39,7 +40,7 @@ async function badgeAccess(req,res){
 
     const microc = await MicroController.findOne({
         where:{
-            badgeAddress:badgeAddr
+            addrMac:macAddr
         }
     })
 

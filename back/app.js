@@ -16,24 +16,9 @@ app.use('/api', apiRoute);
 try {
     sequelize.authenticate();
 
-/*    MicroController.hasMany(Historic, {
-        as: "microc_h",
-        foreignKey: "microc_id",
-    });*/
-
-    //Historic.hasMany(MicroController);
    MicroController.hasMany(Historic);
-
-    //Historic.hasMany(Badge);
    Badge.hasMany(Historic);
 
-
-/*
-    Badge.hasMany(Historic, {
-        as: "badge_h",
-        foreignKey: "badge_id",
-    });
-*/
     User.hasMany(MicroController,{foreignKey: 'user_id', as:'user_microc'});
     User.hasMany(Badge,{foreignKey: 'user_id', as:'user_badge'});
 
