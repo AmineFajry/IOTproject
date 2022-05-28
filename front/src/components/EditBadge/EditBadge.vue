@@ -4,16 +4,18 @@
           max-width="600"
       >
         <template v-slot:activator="{ on, attrs }">
-          <v-btn
-              text
+          <v-icon
+              small
               class="mr-2"
               v-bind="attrs"
               v-on="on"
           >
-            Ajouter un badge
-          </v-btn>
+            mdi-pencil
+          </v-icon>
         </template>
         <template v-slot:default="dialog">
+          <v-form ref="form" v-model="valid" lazy-validation>
+
           <v-card>
             <v-toolbar
                 color="primary"
@@ -23,16 +25,21 @@
              <v-text-field
                 label="Adresse du badge"
                 v-model="badge['badgeAddress']"
+                :rules="rules"
              >
              </v-text-field>
               <v-text-field
                   label="Prenom du possesseur du badge"
                   v-model="badge['prenom']"
+                  :rules="rules"
+
               >
               </v-text-field>
               <v-text-field
                   label="Nom du possesseur du badge"
                   v-model="badge['nom']"
+                  :rules="rules"
+
               >
               </v-text-field>
 
@@ -47,15 +54,16 @@
               <v-btn
                   text
                   color="red"
-                  @click="dialog.value = false"
+                  @click="cancel(dialog)"
               >Annuler</v-btn>
               <v-btn
                   text
                   color="green"
-                  @click="$emit('click',{badge,dialog})"
+                  @click="submit(dialog)"
               >Valider</v-btn>
             </v-card-actions>
           </v-card>
+          </v-form>
         </template>
       </v-dialog>
 </template>
@@ -65,24 +73,36 @@ import {mapGetters} from "vuex";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: "editBadge",
+  name: "CreateBadge",
+  props:['id'],
   data(){
     return{
-      badge:{
-        badgeAddress:'',
-        prenom:'',
-        nom:'',
-        autorisation:'',
-        user_id:''
-      }
+      badgePrevious:{},
+      badge:{},
+      valid:true,
+      rules: [
+        v => !!v || 'le champ est obligatoire',
+      ],
     }
   },
   mounted() {
+    const findBadge = this.badges.find(_badges =>{
+      return _badges.id === this.id
+    })
+    this.badge = {...findBadge}
   },
   computed:{
     ...mapGetters(['badges'])
   },
   methods:{
+    cancel(dialog){
+      dialog.value = false
+    },
+    submit(dialog){
+      if(this.$refs.form.validate()){
+        this.$emit('click',{badge:this.badge,dialog})
+      }
+    }
   },
 }
 </script>

@@ -1,5 +1,6 @@
 const MicroController = require('../models/MicroControllerModel')
 const Badge = require('../models/BadgeModel')
+const Historic = require('../models/HistoricModel')
 
 
 async function getBrightness(req,res){
@@ -36,9 +37,24 @@ async function badgeAccess(req,res){
         }
     })
 
+    const microc = await MicroController.findOne({
+        where:{
+            badgeAddress:badgeAddr
+        }
+    })
+
+    const storeHistoric = await Historic.create({
+        MicroControllerId:microc.id,
+        BadgeId:badge.id
+    })
+
     if(!badge){
         res.status(400).json({error:true,message:"NO_DATA"})
-    }else{
+    }
+    else if(!storeHistoric){
+        res.status(500).json({error:true,message:"HISTORIC_NO_SAVED"})
+    }
+    else{
         res.status(200).json({error:false,message:badge.autorisation})
     }
 }

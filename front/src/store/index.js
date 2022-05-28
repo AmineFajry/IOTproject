@@ -39,7 +39,6 @@ export default new Vuex.Store({
       state.authenticating = authenticating;
     },
     setUser(state, { email, token,id}) {
-      console.log(email, token,id)
       Vue.set(state.user, "email", email);
       Vue.set(state.user, "token", token);
       Vue.set(state.user, "id", id);
@@ -51,7 +50,6 @@ export default new Vuex.Store({
       state.historique = historique
     },
     setMicrocs(state, microcs){
-      console.log(microcs)
       state.microcs = microcs
     },
     upsertBadge(state,badge){
@@ -185,7 +183,6 @@ export default new Vuex.Store({
 
     },
     updateLightSensor({commit},{iot}){
-      console.log(iot)
       const promise =  dataService.updateLightSensor({iot});
       promise.then(result =>{
         const microc = result.data.message

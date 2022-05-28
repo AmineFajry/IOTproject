@@ -51,7 +51,7 @@ async function deleteMicroc(req,res){
         }
     })
     
-        if(count !== 1){
+    if(count !== 1){
         res.status(400).json({error:true,message:'DATA_NO_DELETED'})
     }else{
         res.status(200).json({error:false,message:count})   

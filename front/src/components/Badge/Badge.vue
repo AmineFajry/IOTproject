@@ -43,8 +43,8 @@
 
 <script>
 import {mapActions,mapGetters} from "vuex";
-import CreateBadge from "@/components/EditBadge/EditBadge";
-import EditBadge from "@/components/CreateBadge/CreateBadge";
+import CreateBadge from "@/components/CreateBadge/CreateBadge";
+import EditBadge from "@/components/EditBadge/EditBadge";
 import moment from "moment";
 
 export default {
@@ -98,16 +98,13 @@ export default {
       })
     },
     updateBadge(data){
-      this.editBadge({badge:data.badge}).then(result=>{
-        console.log(result)
+      this.editBadge({badge:data.badge}).then(()=>{
         data.dialog.value = false
       })
     },
     createBadge: function (data) {
       data.badge.user_id = this.user.id
-      console.log(this.user.id)
-      this.storeBadge({badge: data.badge}).then(result => {
-        console.log(result)
+      this.storeBadge({badge: data.badge}).then(() => {
         data.dialog.value = false
       })
     },

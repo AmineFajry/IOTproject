@@ -1,5 +1,5 @@
 <template>
-    <div> 
+  <v-container>
         <h1 class="text-center">Partie microcontrôleur</h1>
         <CreateObjetConnecte @click="createIOT"></CreateObjetConnecte>
         <v-data-table
@@ -16,14 +16,14 @@
 
             <template v-slot:[`item.actions`]="{ item }">
 
-            <EditObjetConnecte :id="item.id" :addrMac="item.addrMac" @click="updateIOT"/>
+            <EditObjetConnecte :id="item.id" :addrMac="item.addrMac" :seuil-luminosite="item.seuilLuminosite" @click="updateIOT"/>
 
             <v-icon small @click="deleteIOT(item.id)">mdi-delete</v-icon>
 
         </template>
 
         </v-data-table>
-    </div> 
+    </v-container>
 </template>
 
 <script>
@@ -39,7 +39,6 @@ export default {
         return{
           headers: [
           { text: 'Idantifient', value: 'id' },
-          { text: 'Numéro User', value: 'user_id' },
           { text: 'Adresse Mac', value: 'addrMac' },
           { text: 'Seuil de Luminosité', value: 'seuilLuminosite'},
           { text: 'Date de création', value: 'createdAt' },
@@ -49,13 +48,13 @@ export default {
         }
     },
     mounted:function(){
-        this.getIOTdata().then(response =>{this.rows = response.data})
+        this.getIOTdata().then(response => {
+          this.rows = response.data
+        })
     },
     methods:{
         ...mapActions(['getIOTdata','deleteIOTdata','postIOTData','updateLightSensor']),
-        createIOT: function (data) {
-            data.iot.user_id = this.user.id
-    
+        createIOT(data) {
             this.postIOTData({iot:data.iot}).then(result => {
                 console.log(result)
                 data.dialog.value = false
@@ -67,7 +66,7 @@ export default {
           })
         },
         updateIOT(data){
-           
+          console.log(data.iot)
             this.updateLightSensor({iot:data.iot}).then(result=>{
                 console.log(result)
                 data.dialog.value = false
